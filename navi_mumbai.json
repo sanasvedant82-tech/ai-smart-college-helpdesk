@@ -1,0 +1,107 @@
+[
+  {
+    "name": "Yashwantrao Chavan College of Arts, Commerce and Science",
+    "location": "Koparkhairane, Navi Mumbai",
+    "streams": "Arts, Science, Commerce, B.Sc CS, B.Sc IT, BMS, BMM, B.Com"
+  },
+  {
+    "name": "F.G. Naik College of Arts, Science and Commerce",
+    "location": "Koparkhairane, Navi Mumbai",
+    "streams": "Arts, Science, Commerce"
+  },
+  {
+    "name": "D.V.S. College of Commerce",
+    "location": "Koparkhairane, Navi Mumbai",
+    "streams": "Commerce"
+  },
+  {
+    "name": "I.C.L.E.S. Motilal Jhunjhunwala College",
+    "location": "Vashi, Navi Mumbai",
+    "streams": "Arts, Science, Commerce"
+  },
+  {
+    "name": "S.K. College of Science and Commerce",
+    "location": "Nerul, Navi Mumbai",
+    "streams": "Science, Commerce"
+  },
+  {
+    "name": "Sterling College of Arts, Commerce and Science",
+    "location": "Nerul, Navi Mumbai",
+    "streams": "Arts, Science, Commerce"
+  },
+  {
+    "name": "New Horizon College of Commerce",
+    "location": "Airoli, Navi Mumbai",
+    "streams": "Commerce"
+  },
+  {
+    "name": "Pillai College of Arts, Commerce and Science",
+    "location": "New Panvel",
+    "streams": "Arts, Science, Commerce"
+  },
+  {
+    "name": "SIES Graduate School of Technology",
+    "location": "Nerul, Navi Mumbai",
+    "streams": "Engineering, B.E., B.Tech"
+  },
+  {
+    "name": "Fr. C. Rodrigues Institute of Technology",
+    "location": "Vashi, Navi Mumbai",
+    "streams": "Engineering, B.E., B.Tech"
+  },
+  {
+    "name": "Lokmanya Tilak College of Engineering",
+    "location": "Koparkhairane, Navi Mumbai",
+    "streams": "Engineering, B.E., B.Tech"
+  },
+  {
+    "name": "Smt. Indira Gandhi College of Engineering",
+    "location": "Ghansoli, Navi Mumbai",
+    "streams": "Engineering, B.E., B.Tech"
+  },
+  {
+    "name": "Bharati Vidyapeeth College of Engineering",
+    "location": "CBD Belapur, Navi Mumbai",
+    "streams": "Engineering, B.E., B.Tech"
+  },
+  {
+    "name": "Datta Meghe College of Engineering",
+    "location": "Airoli, Navi Mumbai",
+    "streams": "Engineering, B.E., B.Tech"
+  },
+  {
+    "name": "A. C. Patil College of Engineering",
+    "location": "Kharghar, Navi Mumbai",
+    "streams": "Engineering, B.E., B.Tech"
+  },
+  {
+    "name": "Saraswati College of Engineering",
+    "location": "Kharghar, Navi Mumbai",
+    "streams": "Engineering, B.E., B.Tech"
+  },
+  {
+    "name": "Terna Engineering College",
+    "location": "Nerul, Navi Mumbai",
+    "streams": "Engineering, B.E., B.Tech"
+  },
+  {
+    "name": "Pillai College of Engineering",
+    "location": "New Panvel",
+    "streams": "Engineering, B.E., B.Tech"
+  },
+  {
+    "name": "Gahlot Institute of Pharmacy",
+    "location": "Koparkhairane, Navi Mumbai",
+    "streams": "Pharmacy, B.Pharm"
+  },
+  {
+    "name": "Bharati Vidyapeeth College of Pharmacy",
+    "location": "CBD Belapur, Navi Mumbai",
+    "streams": "Pharmacy, B.Pharm"
+  },
+  {
+    "name": "Oriental College of Pharmacy",
+    "location": "Sanpada, Navi Mumbai",
+    "streams": "Pharmacy, B.Pharm"
+  }
+]

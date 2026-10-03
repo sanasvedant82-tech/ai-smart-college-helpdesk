@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Based Smart College Helpdesk</title>
+<style>
+*{box-sizing:border-box;font-family:Arial,sans-serif}
+body{margin:0;background:#f4f8ff;color:#222}
+header{background:#1565c0;color:#fff;text-align:center;padding:24px 15px}
+header h1{margin:0;font-size:24px}
+.container{max-width:700px;margin:auto;padding:15px}
+.card{background:#fff;padding:18px;margin-bottom:15px;border-radius:15px;box-shadow:0 3px 10px #d5dce8}
+h2{color:#1565c0;margin-top:0}
+input{width:100%;padding:13px;border:1px solid #ccc;border-radius:10px;font-size:15px;margin-bottom:10px}
+button{width:100%;padding:13px;border:0;border-radius:10px;background:#1565c0;color:#fff;font-size:15px;cursor:pointer}
+button:active{transform:scale(.99)}
+.service-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.result{background:#f5f8ff;padding:14px;margin-top:10px;border-radius:10px;border-left:4px solid #1565c0}
+.answer{background:#e8f1ff;padding:14px;margin-top:12px;border-radius:10px;line-height:1.5}
+.muted{text-align:center;color:#777}
+footer{text-align:center;color:#777;padding:20px}
+@media(max-width:430px){.service-grid{grid-template-columns:1fr 1fr}header h1{font-size:21px}}
+</style>
+</head>
+<body>
+
+<header>
+<h1>🎓 AI Based Smart College Helpdesk</h1>
+<p>Mumbai University Student Support System</p>
+</header>
+
+<div class="container">
+
+<div class="card">
+<h2>🤖 AI Helpdesk</h2>
+<input id="question" type="text" placeholder="Ask about fees, exams, admission, hostel...">
+<button onclick="askAI()">Ask AI 🤖</button>
+<div id="aiAnswer"></div>
+</div>
+
+<div class="card">
+<h2>🔎 College & Stream Search</h2>
+<input id="searchBox" type="text" placeholder="Example: BSc, Commerce, Science, Mithibai...">
+<button onclick="searchColleges()">Search College 🔎</button>
+<div id="searchResults"></div>
+</div>
+
+<div class="card">
+<h2>🏫 Student Services</h2>
+<div class="service-grid" id="services"></div>
+<div id="serviceAnswer"></div>
+</div>
+
+<div class="card">
+<h2>ℹ️ About System</h2>
+<p>This AI-based smart college helpdesk provides students with college search, stream information and common student support services.</p>
+</div>
+
+</div>
+
+<footer>AI Based Smart College Helpdesk & Student Support System</footer>
+
+<script>
+const colleges = [
+{name:"K. J. Somaiya College of Arts and Commerce",location:"Mumbai",streams:"Arts, Commerce"},
+{name:"SIES College of Arts, Science and Commerce",location:"Mumbai",streams:"Arts, Science, Commerce"},
+{name:"Ramnarain Ruia Autonomous College",location:"Mumbai",streams:"Arts, Science"},
+{name:"R. A. Podar College of Commerce and Economics",location:"Mumbai",streams:"Commerce"},
+{name:"Mithibai College",location:"Mumbai",streams:"Arts, Science, Commerce"},
+{name:"Jai Hind College",location:"Mumbai",streams:"Arts, Science, Commerce"},
+{name:"K.C. College",location:"Mumbai",streams:"Arts, Science, Commerce"},
+{name:"St. Xavier's College",location:"Mumbai",streams:"Arts, Science, Commerce"},
+{name:"Wilson College",location:"Mumbai",streams:"Arts, Science, Commerce"},
+{name:"Sophia College for Women",location:"Mumbai",streams:"Arts, Science, Commerce"},
+{name:"H.R. College of Commerce and Economics",location:"Mumbai",streams:"Commerce"},
+{name:"R.D. National College",location:"Mumbai",streams:"Arts, Science, Commerce"},
+{name:"Thakur College of Science and Commerce",location:"Mumbai",streams:"Science, Commerce"},
+{name:"Patkar-Varde College",location:"Mumbai",streams:"Arts, Science, Commerce"},
+{name:"Nagindas Khandwala College",location:"Mumbai",streams:"Arts, Science, Commerce"}
+];
+
+const services = {
+fees:["💰 Fees Information","For fee structure, fee payment and payment-related queries, please contact the respective college accounts department."],
+exam:["📝 Examination Information","Students can check examination forms, exam schedules, hall tickets and examination notices through their college."],
+college:["📚 College Information","Use the College Search section to search colleges by college name or stream."],
+notice:["📢 Notices","Important college notices, examination updates, events and announcements can be displayed here."],
+support:["🎯 Student Support","The helpdesk provides support for admission, fees, examinations, library and other student queries."],
+library:["📖 Library","Library timings, membership, book issue and return information can be obtained from the respective college."],
+admission:["🎓 Admission","For admission process, eligibility and required documents, please contact the respective college admission department."],
+hostel:["🏠 Hostel","Hostel availability and accommodation details depend on the respective college."],
+placement:["💼 Placement & Career","Students can contact the college placement or career cell for internships, placements and career guidance."],
+sports:["🏅 Sports","Students can contact the college sports department for sports activities, teams and events."],
+scholarship:["🎁 Scholarship","Students should check their college scholarship section for eligibility, documents and application information."]
+};
+
+function esc(text){
+return String(text).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+
+function getAIAnswer(question){
+const q=question.toLowerCase();
+
+if(q.includes("hello")||q.includes("hi")||q.includes("hey"))
+return "Hello! 👋 I am your Smart College AI Assistant. How can I help you?";
+if(q.includes("fee")||q.includes("fees")||q.includes("payment")) return services.fees[1];
+if(q.includes("exam")||q.includes("examination")||q.includes("hall ticket")) return services.exam[1];
+if(q.includes("admission")||q.includes("eligibility")) return services.admission[1];
+if(q.includes("library")||q.includes("book")) return services.library[1];
+if(q.includes("hostel")) return services.hostel[1];
+if(q.includes("placement")||q.includes("career")||q.includes("job")||q.includes("internship")) return services.placement[1];
+if(q.includes("scholarship")) return services.scholarship[1];
+if(q.includes("sport")||q.includes("game")) return services.sports[1];
+if(q.includes("notice")||q.includes("announcement")) return services.notice[1];
+if(q.includes("timetable")||q.includes("time table")) return "For the latest timetable, please check the respective college department.";
+if(q.includes("result")||q.includes("marks")) return "For result-related information, please check the official university result portal.";
+if(q.includes("course")||q.includes("courses")||q.includes("stream")) return "You can search colleges and streams using the College Search section.";
+if(q.includes("college")) return "Use the College Search section to search colleges by college name or stream.";
+
+return "I can help you with Fees, Exams, Admission, Library, Hostel, Placement, Scholarship, Sports, Notices, Timetable, Results and College Information.";
+}
+
+async function askAI(){
+const q=document.getElementById("question").value.trim();
+const box=document.getElementById("aiAnswer");
+
+if(!q)return;
+
+box.innerHTML='<div class="answer">🤖 Thinking...</div>';
+
+try{
+const response=await fetch("/api/ai?question="+encodeURIComponent(q),{
+method:"GET",
+cache:"no-store"
+});
+
+if(!response.ok) throw new Error("HTTP "+response.status);
+
+const data=await response.json();
+
+box.innerHTML='<div class="answer"><b>🤖 AI Assistant</b><br><br>'+
+esc(data.answer || "No answer received.")+
+'</div>';
+
+}catch(error){
+console.log("AI Error:",error);
+box.innerHTML='<div class="answer">⚠️ Unable to connect to AI backend.</div>';
+}
+}
+
+function searchColleges(){
+const q=document.getElementById("searchBox").value.trim().toLowerCase();
+const box=document.getElementById("searchResults");
+if(!q){box.innerHTML='<div class="answer">Please enter a college name or stream.</div>';return;}
+const results=colleges.filter(c=>(c.name+" "+c.location+" "+c.streams).toLowerCase().includes(q));
+if(!results.length){box.innerHTML='<div class="answer">No matching college found in the current database.</div>';return;}
+box.innerHTML=results.map(c=>'<div class="result"><b>🎓 '+esc(c.name)+'</b><br><br>📍 '+esc(c.location)+'<br>📚 '+esc(c.streams)+'</div>').join("");
+}
+
+function showService(key){
+const s=services[key];
+document.getElementById("serviceAnswer").innerHTML='<div class="answer"><b>'+esc(s[0])+'</b><br><br>'+esc(s[1])+'</div>';
+}
+
+document.getElementById("services").innerHTML=Object.keys(services).map(k=>
+'<button onclick="showService(\''+k+'\')">'+esc(services[k][0])+'</button>'
+).join("");
+
+document.getElementById("question").addEventListener("keydown",e=>{if(e.key==="Enter")askAI();});
+document.getElementById("searchBox").addEventListener("keydown",e=>{if(e.key==="Enter")searchColleges();});
+</script>
+
+
+
+
+<script>
+fetch("/api/colleges")
+    .then(response => response.json())
+    .then(data => {
+        if (data.success && Array.isArray(data.colleges)) {
+            colleges.length = 0;
+            colleges.push(...data.colleges);
+            console.log("Backend colleges loaded:", colleges.length);
+        }
+    })
+    .catch(error => {
+        console.log("Backend connection error:", error);
+    });
+</script>
+
+</body>
+</html>
