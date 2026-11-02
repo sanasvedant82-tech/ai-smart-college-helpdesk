@@ -154,7 +154,7 @@ const box=document.getElementById("searchResults");
 if(!q){box.innerHTML='<div class="answer">Please enter a college name or stream.</div>';return;}
 const results=colleges.filter(c=>(c.name+" "+c.location+" "+c.streams).toLowerCase().includes(q));
 if(!results.length){box.innerHTML='<div class="answer">No matching college found in the current database.</div>';return;}
-box.innerHTML=results.map(c=>'<div class="result"><b>🎓 '+esc(c.name)+'</b><br><br>📍 '+esc(c.location)+'<br>📚 '+esc(c.streams)+'</div>').join("");
+box.innerHTML=results.map(c=>'<div class="result"><b>🎓 <a href="/college.html?name='+encodeURIComponent(c.name)+'">'+esc(c.name)+'</a></b><br><br>📍 '+esc(c.location)+'<br>📚 '+esc(c.streams)+'</div>').join("");
 }
 
 function showService(key){

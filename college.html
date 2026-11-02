@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>College Details & Admission Enquiry</title>
+
+<style>
+body{
+    font-family:Arial,sans-serif;
+    background:#f4f8ff;
+    margin:0;
+    padding:20px;
+}
+.container{
+    max-width:650px;
+    margin:20px auto;
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 2px 12px #0002;
+}
+h2{
+    color:#174a8b;
+    text-align:center;
+}
+.details,.form-box{
+    background:#f4f8ff;
+    padding:18px;
+    border-radius:10px;
+    margin-top:20px;
+}
+input,select,textarea{
+    width:100%;
+    padding:12px;
+    margin:9px 0;
+    box-sizing:border-box;
+    border:1px solid #ccc;
+    border-radius:6px;
+    font-size:15px;
+}
+button{
+    width:100%;
+    padding:13px;
+    background:#1769aa;
+    color:white;
+    border:0;
+    border-radius:6px;
+    font-size:16px;
+    cursor:pointer;
+}
+.back{
+    display:block;
+    text-align:center;
+    margin-top:18px;
+    color:#1769aa;
+}
+#message{
+    text-align:center;
+    margin-top:15px;
+    font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>🎓 College Details</h2>
+
+<div class="details">
+    <h3 id="collegeName">Loading College...</h3>
+    <p><b>📍 Location:</b> <span id="location">Please wait</span></p>
+    <p><b>📚 Available Streams:</b> <span id="streams">Please wait</span></p>
+</div>
+
+<div class="form-box">
+<h2>Admission Enquiry Form</h2>
+
+<form id="enquiryForm">
+
+<input type="text" id="studentName"
+placeholder="Enter Student Name" required>
+
+<select id="course" required>
+<option value="">Select Course / Field</option>
+<option>B.A.</option>
+<option>B.Com.</option>
+<option>B.Sc.</option>
+<option>B.Sc. Computer Science</option>
+<option>B.Sc. Information Technology</option>
+<option>BCA</option>
+<option>B.Tech</option>
+<option>B.Pharm</option>
+<option>Other</option>
+</select>
+
+<textarea id="messageBox"
+placeholder="Enter your enquiry (Optional)"
+rows="4"></textarea>
+
+<button type="submit">Submit Enquiry</button>
+
+</form>
+
+<div id="message"></div>
+</div>
+
+<a class="back" href="/">← Back to Home</a>
+
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const college = params.get("name") || "";
+
+document.getElementById("collegeName").textContent =
+college || "College Not Selected";
+
+async function loadCollege(){
+    try{
+        const response = await fetch("/api/colleges");
+        const data = await response.json();
+
+        const selected = data.colleges.find(
+            c => c.name === college
+        );
+
+        if(selected){
+            document.getElementById("location").textContent =
+                selected.location;
+
+            document.getElementById("streams").textContent =
+                selected.streams;
+        }else{
+            document.getElementById("location").textContent =
+                "Not available";
+
+            document.getElementById("streams").textContent =
+                "Not available";
+        }
+    }catch(error){
+        document.getElementById("location").textContent =
+            "Unable to load details";
+    }
+}
+
+loadCollege();
+
+document.getElementById("enquiryForm").addEventListener("submit",
+async function(e){
+
+    e.preventDefault();
+
+    const message = document.getElementById("message");
+    message.textContent = "Submitting...";
+
+    const enquiry = {
+        college: college,
+        studentName: document.getElementById("studentName").value.trim(),
+        course: document.getElementById("course").value,
+        enquiry: document.getElementById("messageBox").value.trim()
+    };
+
+    try{
+        const response = await fetch("/api/admission-enquiry",{
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify(enquiry)
+        });
+
+        const result = await response.json();
+
+        if(!response.ok || !result.success){
+            throw new Error("Submission failed");
+        }
+
+        message.textContent =
+            "✅ Admission Enquiry Submitted Successfully!";
+
+        this.reset();
+
+    }catch(error){
+        message.textContent =
+            "⚠️ Unable to submit. Please try again.";
+    }
+});
+</script>
+
+</body>
+</html>
+

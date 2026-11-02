@@ -1,3 +1,17 @@
 __pycache__/
 *.py
 app.pyyy
+
+# Admission enquiry data - keep private
+admission_enquiries.json
+admission_backup/
+server.log
+check.js
+
+# Local backup files
+*_WORKING_BACKUP*
+*_Admission_Final*
+*_73_colleges_final*
+*_73_colleges_working*
+server_before_*.js
+index_before_*.html

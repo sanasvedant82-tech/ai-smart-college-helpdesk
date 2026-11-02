@@ -273,6 +273,69 @@ const server = http.createServer((req, res) => {
         return;
     }
 
+    // Admission Enquiry API
+    if (req.method === "POST" && req.url === "/api/admission-enquiry") {
+        let body = "";
+
+        req.on("data", chunk => {
+            body += chunk;
+            if (body.length > 10000) {
+                req.destroy();
+            }
+        });
+
+        req.on("end", () => {
+            try {
+                const data = JSON.parse(body);
+
+                if (!data.college || !data.studentName || !data.course) {
+                    sendJSON(res, {
+                        success: false,
+                        message: "Please fill all required fields."
+                    });
+                    return;
+                }
+
+                const file = path.join(__dirname, "admission_enquiries.json");
+
+                fs.readFile(file, "utf8", (err, content) => {
+                    let enquiries = [];
+
+                    if (!err) {
+                        try {
+                            enquiries = JSON.parse(content);
+                            if (!Array.isArray(enquiries)) enquiries = [];
+                        } catch (e) {
+                            sendJSON(res, {success: false, message: "Storage error."});
+                            return;
+                        }
+                    }
+
+                    enquiries.push({
+                        college: String(data.college).slice(0, 200),
+                        studentName: String(data.studentName).slice(0, 100),
+                        course: String(data.course).slice(0, 100),
+                        enquiry: String(data.enquiry || "").slice(0, 1000),
+                        submittedAt: new Date().toISOString()
+                    });
+
+                    fs.writeFile(file, JSON.stringify(enquiries, null, 2), writeErr => {
+                        if (writeErr) {
+                            sendJSON(res, {success: false, message: "Unable to save enquiry."});
+                            return;
+                        }
+
+                        sendJSON(res, {success: true, message: "Enquiry saved successfully."});
+                    });
+                });
+            } catch (error) {
+                sendJSON(res, {success: false, message: "Invalid enquiry data."});
+            }
+        });
+
+        return;
+    }
+
     // AI API
     if (req.url.startsWith("/api/ai")) {
         const url = new URL(req.url, "http://localhost:3000");
@@ -290,6 +353,24 @@ const server = http.createServer((req, res) => {
             success: true,
             services: services
         });
+        return;
+    }
+
+    // College Details Page
+    if (req.url === "/college.html" || req.url.startsWith("/college.html?")) {
+        const file = path.join(__dirname, "college.html");
+
+        fs.readFile(file, (err, data) => {
+            if (err) {
+                res.writeHead(500, {"Content-Type": "text/plain"});
+                res.end("College page not found.");
+                return;
+            }
+
+            res.writeHead(200, {"Content-Type": "text/html"});
+            res.end(data);
+        });
+
         return;
     }
 
